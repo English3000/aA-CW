@@ -3,42 +3,29 @@ require_relative "poly-tree-node/lib/00_tree_node.rb"
 class KnightPathFinder
 
   def initialize(start_pos)
-    @start_pos = PolyTreeNode.new(start_pos)
-    @move_tree = []
+    @start_pos = start_pos
+    @move_tree = PolyTreeNode.new(start_pos)
+    @visited_positions = [start_pos]
     build_move_tree #all possible seq's of moves
-    @visited_pos = [start_pos] #or start_pos.value
   end
 
-  def build_move_tree #make recursive/bfs
-    #calls new_moves(self.value) from current pos
-    que = [@start_pos.value]
+  def build_move_tree
+    que = [@move_tree]
     until que.empty?
       node = que.shift
-      next_moves = new_moves(node.value)
+      next_moves = new_moves(node)
       next_moves.each do |sq|
-        new_pos = PolyTreeNode.new(sq)
-        new_pos.parent = node
-        node.add_child(new_pos)
-        @move_tree << new_pos #what are we building w/in @move_tree?
-        que << new_pos
+        new_node = PolyTreeNode.new(sq)
+        node.add_child(new_node)
+        que << new_node
       end
     end
     nil
   end
 
-  # def bfs(target_value)
-  #   que = [self]
-  #   until que.empty?
-  #     node = que.shift
-  #     return node if node.value == target_value
-  #     que += node.children
-  #   end
-  #   nil
-  # end
+  def valid_moves(node = @move_tree)
+    row, col = node.value
 
-  def valid_moves(pos = @start_pos)
-    row, col = pos.value
-    #row: +/- 1/2, col: +/- 2/1
     pos1 = [row + 2, col + 1]
     pos2 = [row + 1, col + 2]
     pos3 = [row - 1, col + 2]
@@ -53,27 +40,29 @@ class KnightPathFinder
 
     all_pos.select do |sq|
       row, col = sq
-      row.between?(0, 7) && col.between?(0, 7) && !( @visited_pos.include?(pos) )
+      row.between?(0, 7) && col.between?(0, 7) && !( @visited_positions.include?(node) )
     end
   end
 
-  def new_moves(pos = @start_pos)
-    #check for repeated moves
-    new_pos = self.valid_moves(pos).reject{ |sq| @visited_pos.include?(sq) }
-    @visited_pos += new_pos
-    new_pos
+  def new_moves(node = @move_tree)
+    new_nodes = self.valid_moves(node).reject{ |sq| @visited_positions.include?(sq) }
+    @visited_positions += new_nodes
+    new_nodes
   end
 
   def shortest_path(end_pos) #find_path
-    # @move_tree #has all possible valid paths #traverse it
-    # bfs(end_pos) #to find shortest of them
+    node = @move_tree.bfs(end_pos)
+    trace_path(node)
   end
 
-  def trace_path
-    #should return the values in order from start_pos to end_pos
+  def trace_path(node)
+    path = []
+    current_node = node
+    until current_node.nil?
+      path << current_node.value
+      current_node = current_node.parent
+    end
+    path.reverse
   end
 
 end
-
-# knight = KnightPathFinder.new([1,2])
-# knight.new_moves([1,2])
