@@ -29,13 +29,31 @@ class PolyTreeNode
     @children.delete(node)
   end
 
-
   def children
     @children
   end
 
   def value
     @value
+  end
+
+  def dfs(target_value)
+    return self if value == target_value
+    children.each do |child|
+      result = child.dfs(target_value)
+      return result unless result.nil?
+    end
+    nil
+  end
+
+  def bfs(target_value)
+    que = [self]
+    until que.empty?
+      node = que.shift
+      return node if node.value == target_value
+      que += node.children
+    end
+    nil
   end
 
 end
