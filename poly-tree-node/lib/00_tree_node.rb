@@ -7,11 +7,11 @@ class PolyTreeNode
   end
 
   def parent
-    @parent#.dup
+    @parent
   end
 
   def parent=(node)
-    #self.parent.children.delete(self)
+    @parent.children.delete(self) unless @parent.nil?
     @parent = node
     unless node.nil? || node.children.include?(self)
       node.children << self
@@ -20,9 +20,12 @@ class PolyTreeNode
 
   def add_child(node)
     @children << node unless @children.include?(node)
+    node.parent = self
   end
 
   def remove_child(node)
+    raise "Not a child!" unless @children.include?(node)
+    node.parent = nil
     @children.delete(node)
   end
 
@@ -32,7 +35,7 @@ class PolyTreeNode
   end
 
   def value
-    @value#.dup
+    @value
   end
 
 end
