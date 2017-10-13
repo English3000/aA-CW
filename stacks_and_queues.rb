@@ -1,3 +1,5 @@
+require 'byebug'
+
 class MyQueue
   def initialize
     @store = []
@@ -26,28 +28,44 @@ end
 
 
 class MyStack
+  attr_reader :store
+
   def initialize
-    @store = []
-    @values = Hash.new(0)
-    #peek
+    @store = [] #[{value: 0, min: 0, max: 0},
+    #{value: 1, min: 0, max: 1}, {value: -1, min: -1, max: 1}]
   end
 
   def push(el)
-    @store << el
-    @values[el] += 1
+    # debugger
+    unless @store.empty? #issue with accessing end of array?
+      new_max = (el > max ? el : max)
+      new_min = (el < min ? el : min)
+      el_history = {min: new_min, max: new_max, value: el}
+    else
+      el_history = {min: el, max: el, value: el}
+    end
+    @store << el_history
   end
 
   def pop
     el = @store.pop
-    @values[el] -= 1
   end
 
   def max
-    @values.max_by { |k, v| k if v > 0}.first
+    # debugger
+    # unless @store.empty?
+    peek[:max]
+    # else
+    #   nil
+    # end
   end
 
   def min
-    @values.min_by { |k, v| k if v > 0}.first
+    # unless @store.empty?
+    peek[:min]
+    # else
+    #   nil
+    # end
   end
 
   def peek
@@ -89,27 +107,24 @@ class StackQueue < MyStack
   end
 end
 
-class MinMaxStackQueue < MyStack#Queue
-  # def initialize
-  #   @stack = MyStack.new
-  # end
+class MinMaxStackQueue
+  def initialize
+    @stack = MyStack.new
+  end
 
   def enqueue(el)
-    @values[el] += 1
-    @store.push(el)
+    @stack.push(el)
   end
 
   def dequeue
-    # to_delete = @stack.first
-    @values[@store.first] -= 1
-    @store.delete_at(0)
+    @stack.store.delete_at(0)
   end
 
-  # def max
-  #
-  # end
-  #
-  # def min
-  #
-  # end
+  def max
+    @stack.max
+  end
+
+  def min
+    @stack.min
+  end
 end

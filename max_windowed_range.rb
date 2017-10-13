@@ -18,7 +18,7 @@ def windowed_max_range(array, window_size)
   current_max_range = nil
   sq = MinMaxStackQueue.new
   window_size.times { |i| sq.enqueue(array[i]) }
-  (0..array.length - window_size).each do |i|
+  (0..array.length + 1 - window_size).each do |i|
     range = sq.max - sq.min
     current_max_range = range if current_max_range.nil? || range > current_max_range
     current_max_range
