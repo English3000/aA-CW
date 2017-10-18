@@ -1,5 +1,6 @@
 require 'sqlite3'
 require 'singleton'
+require 'active_support/inflector'
 
 class QuestionsDatabase < SQLite3::Database
   include Singleton
@@ -11,18 +12,45 @@ class QuestionsDatabase < SQLite3::Database
   end
 end
 
-class User
-  attr_accessor :fname, :lname
+class Model
   attr_reader :id
 
   def self.find_by_id(id)
     data = QuestionsDatabase.instance.execute(<<-SQL, id)
-      SELECT * FROM users WHERE id = ?
+      SELECT * FROM #{self.to_s.tableize} WHERE id = ?
     SQL
 
     return nil if data.empty?
-    User.new(data.first)
+    self.new(data.first)
   end
+
+  # def self.all
+  #   data = QuestionsDatabase.instance.execute(<<-SQL, object_type, id)
+  #     CASE ?
+  #     WHEN User THEN SELECT * FROM users
+  #     WHEN Question THEN SELECT * FROM questions
+  #     WHEN Reply THEN SELECT * FROM replies
+  #     END
+  #   SQL
+  # end
+
+  def initialize(options)
+    @id = options['id']
+  end
+end
+
+class User < Model
+  attr_accessor :fname, :lname
+  attr_reader :id
+
+  # def self.find_by_id(id)
+  #   data = QuestionsDatabase.instance.execute(<<-SQL, id)
+  #     SELECT * FROM users WHERE id = ?
+  #   SQL
+  #
+  #   return nil if data.empty?
+  #   User.new(data.first)
+  # end
 
   def self.find_by_name(fname, lname)
     data = QuestionsDatabase.instance.execute(<<-SQL, fname, lname)
@@ -86,18 +114,18 @@ class User
   end
 end
 
-class Question
+class Question < Model
   attr_accessor :title, :body
   attr_reader :id, :author_id
 
-  def self.find_by_id(id)
-    data = QuestionsDatabase.instance.execute(<<-SQL, id)
-      SELECT * FROM questions WHERE id = ?
-    SQL
-
-    return nil if data.empty?
-    Question.new(data.first)
-  end
+  # def self.find_by_id(id)
+  #   data = QuestionsDatabase.instance.execute(<<-SQL, id)
+  #     SELECT * FROM questions WHERE id = ?
+  #   SQL
+  #
+  #   return nil if data.empty?
+  #   Question.new(data.first)
+  # end
 
   def self.find_by_author_id(author_id)
     data = QuestionsDatabase.instance.execute(<<-SQL, author_id)
@@ -167,18 +195,18 @@ class Question
 
 end
 
-class Reply
+class Reply < Model
   attr_accessor :body
   attr_reader :id, :user_id, :question_id, :parent_reply_id
 
-  def self.find_by_id(id)
-    data = QuestionsDatabase.instance.execute(<<-SQL, id)
-      SELECT * FROM replies WHERE id = ?
-    SQL
-
-    return nil if data.empty?
-    Reply.new(data.first)
-  end
+  # def self.find_by_id(id)
+  #   data = QuestionsDatabase.instance.execute(<<-SQL, id)
+  #     SELECT * FROM replies WHERE id = ?
+  #   SQL
+  #
+  #   return nil if data.empty?
+  #   Reply.new(data.first)
+  # end
 
   def self.find_by_user_id(user_id)
     data = QuestionsDatabase.instance.execute(<<-SQL, user_id)
