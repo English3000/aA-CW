@@ -11,9 +11,9 @@ CREATE TABLE questions (
   id INTEGER PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   body TEXT NOT NULL,
-  user_id INTEGER NOT NULL,
+  author_id INTEGER NOT NULL,
 
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (author_id) REFERENCES users(id)
 )
 ;
 
@@ -63,10 +63,12 @@ VALUES
 ;
 
 INSERT INTO
-  questions (title, body, user_id)
+  questions (title, body, author_id)
 VALUES
   ("Today's date", 'What day is today, again?', 1),
-  ('Existentialism', 'WHY ARE WE HERE?!?!?!?!?!', 2)
+  ('Existentialism', 'WHY ARE WE HERE?!?!?!?!?!', 2),
+  ('RuPaul', 'Is RuPaul the best dragqueen ever?', 2),
+  ('Look at Progress Tracker', 'Look at Progress Tracker.', 1)
 ;
 
 INSERT INTO
@@ -80,11 +82,11 @@ VALUES
 INSERT INTO
   question_likes (user_id, question_id)
 VALUES
-  (1, 2), (2, 1)
+  (1, 2), (2, 1), (1, 4), (1, 1)
 ;
 
 INSERT INTO
   question_follows (user_id, question_id)
 VALUES
-  (1, 2)
+  (1, 2), (2, 2), (1, 1)
 ;
