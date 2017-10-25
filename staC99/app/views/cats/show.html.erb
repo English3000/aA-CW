@@ -11,6 +11,43 @@ show cat's attributes in a table
     <td>Name</td><td> <%= @cat.name %> </td>
   </tr>
 
+
+    <!-- for the cat, display APPROVED cr's only -->
+  <% @cat.cat_rental_requests.order(:start_date).each do |cat_rental_request| %>
+    <% if cat_rental_request.status == 'APPROVED' %>
+    <tr>
+      <td>Status</td><td> <%= cat_rental_request.status %> from <%= cat_rental_request.start_date %> to <%= cat_rental_request.end_date %></td>
+    </tr>
+    <% elsif cat_rental_request.status == 'PENDING' %>
+      <tr>
+
+        <td>Status</td>
+
+        <td>
+          <%= cat_rental_request.status %> from <%= cat_rental_request.start_date %> to <%= cat_rental_request.end_date %>
+        </td>
+
+        <td>
+          <form action="<%= cat_rental_request_url(cat_rental_request[:id]) %>" method="post">
+            <input type="hidden" name="_method" value="PATCH">
+            <input type="hidden" name="cat_rental_request[status]" value="APPROVED">
+            <input type="submit" value="Approve!">
+          </form>
+        </td>
+
+        <td>
+          <form action="<%= cat_rental_request_url(cat_rental_request[:id]) %>" method="post">
+            <input type="hidden" name="_method" value="PATCH">
+            <input type="hidden" name="cat_rental_request[status]" value="DENIED">
+            <input type="submit" value="Deny!">
+          </form>
+        </td>
+
+      </tr>
+    <% end %>
+  <% end %>
+
+
   <tr>
     <td>Age</td><td> <%= @cat.age %> </td>
   </tr>

@@ -24,12 +24,15 @@ class CatRentalRequestsController < ApplicationController
   def create
     @cat_rental_request = CatRentalRequest.new(cat_rental_request_params)
 
-    if @cat_rental_request.does_not_overlap_approved_request
-      @cat_rental_request.save
-      redirect_to cat_rental_request_url(@cat_rental_request)
-    else
-      render json: @cat_rental_request.errors.full_messages, status: :unprocessable_entity
-    end
+    @cat_rental_request.approve?
+    redirect_to cat_url(@cat_rental_request[:cat_id])
+    # if @cat_rental_request.does_not_overlap_approved_request
+    #
+    #   @cat_rental_request.save
+    #   redirect_to cat_url(@cat_rental_request[:cat_id])
+    # else
+    #   render json: "Dates unavailable."
+    # end
   end
 
   def edit
@@ -46,7 +49,7 @@ class CatRentalRequestsController < ApplicationController
     @cat_rental_request = CatRentalRequest.find_by(id: params[:id])
 
    if @cat_rental_request.update_attributes(cat_rental_request_params)
-     redirect_to cat_rental_request_url(@cat_rental_request)
+     redirect_to cat_url(@cat_rental_request[:cat_id])
    else
      render json: @cat_rental_request.errors.full_messages, status: :unprocessable_entity
    end

@@ -2,7 +2,7 @@
 
  -->
 <!-- <% if action == :new %>
-  <form action="<%= new_cat_url %>" method="post">
+  <form action="<%#= new_cat_url %>" method="post">
 <% else %>
   <form action="<%= edit_cat_url(cat[:id]) %>" method="post">
 <% end %> -->
@@ -22,10 +22,11 @@
   <label for="cat_id">Cats For Rent</label>
   <select id="cat_id" name="cat_rental_request[cat_id]">
     <option disabled selected>-- select a cat --</option>
-    <% @cat_rental_requests.each do |cat_rental_request| %>
-      <% if cat_rental_request.does_not_overlap_approved_request %>
-        <option value="<%= cat_rental_request.cat.id %>"><%= cat_rental_request.cat.name %></option>
-      <% end %>
+    <% Cat.all.each do |cat| %>
+      <%# if cat_rental_request.does_not_overlap_approved_request %>
+        <option value="<%= cat.id %>"><%= cat.name %></option>
+      <%# end %>
+    <% end %>
     <!--
     loop through all cr's
     display as options unrented cats
@@ -38,11 +39,12 @@
   <label for="end_date">End-date</label>
   <input id="end_date" type="date" name="cat_rental_request[end_date]" value="<%= cat_rental_request.end_date %>">
   <br>
+  <input type="hidden" name="cat_rental_request[status]" value="PENDING">
   <br>
    <input type="submit" value="Make your request!">
 
   <!-- <form action="index.html" method="post">
-    <input id="birth_date" type="date" value="<%= cat.birth_date %>">
+    <input id="birth_date" type="date" value="<%#= cat.birth_date %>">
   </form> -->
 
 

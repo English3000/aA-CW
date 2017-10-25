@@ -6,7 +6,7 @@ class CatRentalRequest < ApplicationRecord
 
 
   def overlapping_approved_requests
-    self.overlapping_requests.where('status != ?', 'APPROVED') #check if request status is approved
+    self.overlapping_requests.where('status = ?', 'APPROVED') #check if request status is approved
   end
 
   def overlapping_requests
@@ -17,5 +17,19 @@ class CatRentalRequest < ApplicationRecord
 
   def does_not_overlap_approved_request
     !overlapping_approved_requests.exists?
+  end
+
+  def approve?
+    self.transaction do
+      if self.does_not_overlap_approved_request
+        self.status = 'APPROVED'
+        self.save
+        true
+      else
+        self.status = 'DENIED'
+        self.save
+        false
+      end
+    end
   end
 end
