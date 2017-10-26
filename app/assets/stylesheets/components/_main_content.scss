@@ -1,0 +1,93 @@
+.lead {
+  font-size: 20px;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.bullets {
+  list-style: disc;
+  padding-left: 15px;
+}
+
+.bullets li {
+  margin: 10px 0;
+}
+
+#op-ed li {
+  font-weight: bold;
+}
+
+.comments {
+  font-family: $sans-serif;
+  font-size: 11px;
+  color: $light-blue;
+}
+
+.underlined:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.by-line {
+  color: $gray;
+  padding: 5px 0;
+}
+
+.title {
+  padding-top: 5px;
+  margin: 0;
+}
+
+.thumbnail {
+  margin: 1px 0;
+  height: 40px;
+}
+
+.thumbnail img {
+  margin: 0;
+  padding-top: 0;
+  object-fit: cover;
+}
+
+.exception {
+  padding-top: 0;
+}
+
+.segment {
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.float {
+  float: left;
+  width: 50%;
+  box-sizing: border-box;
+  padding-right: 15px;
+}
+
+.last {
+  padding-right: 0;
+}
+
+.center {
+  text-align: center;
+  margin: 0 auto 15px;
+}
+
+.subscript {
+  color: $gray;
+  font-size: 10px;
+  font-family: $sans-serif;
+}
+
+.sign-up button {
+  background-color: $light-blue;
+	border-color: $light-blue;
+	color: white;
+	border-radius: 0 3px 3px 0;
+}
+
+.sign-up button:hover {
+	background-color: $darkest-blue;
+	border-color: $darkest-blue;
+}
