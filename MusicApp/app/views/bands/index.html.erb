@@ -1,0 +1,7 @@
+<table>
+  <% Band.all.each do |band| %>
+    <tr>
+      <td><%= band.name %>&ensp;</td><td><%= band.description %></td>
+    </tr>
+  <% end %>
+</table>

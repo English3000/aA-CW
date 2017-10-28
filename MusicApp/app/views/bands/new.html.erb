@@ -1,0 +1,19 @@
+<% form_name = (@band.id ? "Edit Band Info" : "New Band Form") %>
+<h2 style="margin:0;"><%= form_name %></h2>
+<br>
+<!-- Manager fills in their new client's details -->
+<% action = (@band.id ? band_url(@band.id) : bands_url) %>
+
+<form action="<%= action %>" method="post">
+  <% if @band.id %>
+    <input type="hidden" name="_method" value="patch">
+  <% end %>
+  <%= auth_token %>
+  <input type="hidden" name="band[manager_id]" value="<%= current_user.id %>">
+
+  <label for="name">Name:</label>
+  <input type="text" name="band[name]" value="<%= current_band.name %>">
+  <input type="submit" value="Submit">
+  <br>
+  <textarea name="band[description]" rows="4" cols="40" placeholder="Notes..."><% unless current_band.nil? %><%= current_band.description %><% end %></textarea>
+</form>

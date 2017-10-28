@@ -1,0 +1,13 @@
+<table>
+  <h3 style="margin:0; text-decoration: underline;">My Clients</h3>
+  <% Band.where(manager_id: current_user.id).each do |band| %>
+    <tr>
+      <td><%= link_to band.name, band_url(band) %>&ensp;</td>
+      <td><strong>Signed on </strong><%= band.created_at.strftime("%b %d, %Y") %></td>
+      <td><%= button_to "Rename", edit_band_url(band), method: :get %></td>
+      <td><%= button_to "Delete", band_url(band), method: :delete %></td>
+    </tr>
+  <% end %>
+</table>
+<br>
+<%= button_to "New Client", new_band_url, method: :get %>
