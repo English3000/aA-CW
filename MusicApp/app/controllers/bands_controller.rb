@@ -21,15 +21,16 @@ class BandsController < ApplicationController
   end
 
   def update
-    @band = current_band
-    @band.name, @band.description = params[:band][:name], params[:band][:description]
-    @band.save
-    redirect_to user_url(current_user)
+    if current_band.update(band_params)
+      redirect_to user_url(current_user)
+    else
+      flash[:errors] = current_band.errors.full_messages
+      render :new
+    end
   end
 
   def destroy
-    @band = current_band
-    @band.delete
+    current_band.delete
     redirect_to user_url(current_user)
   end
 

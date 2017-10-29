@@ -20,6 +20,7 @@ class SessionsController < ApplicationController
   def destroy
     current_user.end_session!
     session[:session_token] = nil
-    redirect_to new_session_url
+    render :new
+    # redirect_to new_session_url
   end
 end

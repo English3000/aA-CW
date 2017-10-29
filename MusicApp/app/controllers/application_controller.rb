@@ -9,7 +9,12 @@ class ApplicationController < ActionController::Base
 
   def current_band
     return nil unless session[:session_token]
-    @band ||= Band.find_by(id: params[:id])
+    @band = Band.find_by(id: params[:id])
+  end
+
+  def current_album
+    return nil unless session[:session_token]
+    @album = Album.find_by(id: params[:id])
   end
 
   def logged_in?
