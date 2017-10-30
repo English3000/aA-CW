@@ -14,6 +14,12 @@
 # Configure Using Gemfile
 # gem 'pg'
 #
+test:
+    adapter: postgresql
+    database: music_db_test
+    pool: 5
+    timeout: 5000
+
 default: &default
   adapter: postgresql
   encoding: unicode
