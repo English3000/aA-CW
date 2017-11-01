@@ -1,0 +1,11 @@
+<h1><%= @post.title %></h1>
+<p><%= @post.content %></p>
+
+<section>
+  <% Comment.where(post_id: params[:id]).each do |comment| %>
+    <div><%= comment.author.username %> <%= comment.updated_at %>
+      <br>
+      <br><%= comment.content %>
+    </div>
+  <% end %>
+</section>

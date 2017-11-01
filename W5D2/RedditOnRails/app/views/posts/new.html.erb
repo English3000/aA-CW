@@ -1,0 +1,24 @@
+<h1>What's on your mind?</h1>
+
+<%# url = (!!params[:sub_id] ? sub_posts_url(params[:sub_id]) : post_posts_url(params[:post_id]) ) %>
+<form action="<%= sub_posts_url(params[:sub_id]) %>" method="post">
+  <%= auth_token %>
+  <label for="Title"><strong>Title:</strong>
+    <input id= "Title" type="text" name="post[title]" value="<%= @post.title %>">
+  </label>
+  <br>
+  <br>
+  <label for="Description"><strong>Comment</strong>
+    <br>
+    <textarea id= "Description" name="post[content]" rows="10" cols="60"><%= @post.content %></textarea>
+    <!-- <input  type="text" name="sub[description]" value=""> -->
+  </label>
+
+  <input type="submit" value="ENTER">
+</form>
+
+<% if flash[:errors] %>
+  <% flash[:errors].each do |error| %>
+    <%= error %><br>
+  <% end %>
+<% end %>

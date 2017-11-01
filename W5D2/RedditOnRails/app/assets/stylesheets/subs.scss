@@ -1,0 +1,95 @@
+// Place all the styles related to the Subs controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-center {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.flex-center form {
+  margin-top: 3px;
+}
+
+.subs-show-body {
+  display: flex;
+  border-bottom: 2px black solid;
+}
+
+.subs-show-body:last-of-type {
+  border: 0px;
+}
+
+.sub-aside {
+  display: flex;
+  width: 25%;
+  height: 100%;
+  margin-bottom: 5px;
+}
+
+.sub {
+  background-color: lightgray;
+  width: 90%;
+  border-radius: 10%;
+  padding: 3px 0 5px 5px;
+  text-align: center;
+  justify-content: center;
+}
+
+.see-posts {
+  font-family: cursive;
+  text-transform: uppercase;
+}
+
+.sub-posts {
+  box-sizing: border-box;
+  width: 74.5%;
+}
+
+.post {
+  box-sizing: border-box;
+  max-height: 300px;
+  border: black dotted 2px;
+  border-radius: 25%;
+  overflow: hidden;
+  display: flex;
+}
+
+.add-margin {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.post-aside {
+  padding: 5px;
+  width: 17.5%;
+  min-width: 125px;
+  background-color: black;
+  color: white;
+  font-family: Gill Sans;
+  font-weight: 300;
+  overflow: hidden;
+}
+
+.post-title {
+  margin: 0;
+  margin-top: 10px;
+  // padding: 5px 0 0 0;
+}
+
+.post-title a {
+  color: white;
+  text-decoration: none;
+}
+
+.post-text {
+  // width: 82.5%;
+  padding: 3px 0px 0px 10px;
+  margin: 0;
+  // border-left: black solid 1px;
+}

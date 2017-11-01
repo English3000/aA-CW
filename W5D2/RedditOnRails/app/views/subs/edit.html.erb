@@ -1,0 +1,18 @@
+<h1>'sup?</h1>
+
+<form action="<%= sub_url(@sub) %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <%= auth_token %>
+  <label for="Title"><strong>Title:</strong>
+    <input id= "Title" type="text" name="sub[title]" value="<%= @sub.title %>">
+  </label>
+  <br>
+  <br>
+  <label for="Description"><strong>Description</strong>
+    <br>
+    <textarea id= "Description" name="sub[description]" rows="10" cols="60"><%= @sub.description %></textarea>
+    <!-- <input  type="text" name="sub[description]" value=""> -->
+  </label>
+
+  <input type="submit" value="ENTER">
+</form>

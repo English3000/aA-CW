@@ -1,0 +1,86 @@
+<h1>
+  <% unless logged_in? %>
+    Reddit on Rails
+  <% else %>
+    Subs
+  <% end %>
+</h1>
+<% unless logged_in? %>
+  <% user = User.new %>
+  <strong>Sign Up!</strong>
+  <form action="/users" method="post">
+    <%= auth_token %>
+    <label for="Username">Username
+      <input id= "Username" type="text" name="user[username]" value="<%= user.username %>">
+    </label>
+
+    <label for="Password">Password
+      <input id= "Password" type="text" name="user[password]" value="<%= user.password %>">
+    </label>
+
+    <input type="submit" value="ENTER">
+  </form>
+  <br>
+  <strong>Sign In:</strong>
+  <form action="/session" method="post">
+    <%= auth_token %>
+    <label for="username">Username
+      <input id= "username" type="text" name="user[username]" value="<%= user.username %>">
+    </label>
+
+    <label for="password">Password
+      <input id= "password" type="text" name="user[password]" value="<%= user.password %>">
+    </label>
+
+    <input type="submit" value="ENTER">
+  </form>
+  <br>
+  <br>
+<% end %>
+<% unless logged_in? %>
+<h2>Subs</h2>
+<% end %>
+<% @subs.each do |sub| %>
+<div class="subs-show-body">
+  <aside class="sub-aside">
+    <div class="sub">
+      <h1><%= link_to sub.title, sub_url(sub) %></h1>
+      <h4>Description</h4>
+      <p><%= sub.description %></p>
+      <div class="flex-center">
+        <%= button_to "Comment", new_sub_post_url(sub), method: :get if logged_in? %>&ensp;
+        <%= button_to "Edit", edit_sub_url(sub), method: :get if sub.moderator?(current_user) %>&ensp;
+        <%= button_to "Delete", sub_url(sub), method: :delete if sub.moderator?(current_user) %>
+      </div>
+      <!-- <div class="see-posts">
+        <input type="checkbox" id="displayer"/>
+        <label for="displayer">See Posts</label>
+      </div> -->
+    </div>
+  </aside>
+
+  <section class="sub-posts">
+    <% Post.where(sub_id: sub.id).each do |post| %>
+      <div class="post">
+        <aside class="post-aside">
+          <h4 class="post-title"><%= link_to post.title, post_url(post) %></h4>
+          <div class="flex">
+            <%= button_to "Edit", edit_post_url(post), method: :get if post.author?(current_user) %>&ensp;
+            <%= button_to "Delete", post_url(post), method: :delete if post.author?(current_user) %>
+          </div>
+        </aside>
+        <p class="post-text"><%= post.content %></p>
+      </div>
+      <div class="add-margin"><%= button_to "Respond", new_post_comment_url(post), method: :get %></div>
+      <!-- having sub obj. means sub_id validation... -->
+
+    <% end %>
+  </section>
+</div>
+  <!-- <li> -->
+    <%#= link_to sub.title, sub_url(sub) %>
+    <%#= button_to "Edit", edit_sub_url(sub), method: :get if sub.moderator?(current_user) %>
+    <%#= button_to "Delete", sub_url(sub), method: :delete if sub.moderator?(current_user) %>
+  <!-- </li> -->
+  <br>
+<% end %>
