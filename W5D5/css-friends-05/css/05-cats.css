@@ -1,0 +1,38 @@
+/* PHASE 5: Cats */
+.content-header {
+  height: 200px;
+  width: 900px;
+  border-bottom: 1px solid #ccc;
+  border-top: 0px;
+  background-image: url('https://raw.githubusercontent.com/appacademy/curriculum/master/html-css/micro-projects/css-friends/docs/images/cats.jpg?token=AcOtGoTEceEP6imxk10m6WjTS3f9geBaks5aBhLYwA%3D%3D');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  /*box-sizing: border-box;*/
+  /*padding-bottom: 20px;*/
+}
+
+.content-header-h1 {
+  /*position: absolute;*/
+  text-shadow: black 0.01em 0.01em 0.2em;
+  color: white;
+  font-size: 36px;
+  font-weight: 300;
+  margin-bottom: 17px;
+  margin-right: 222px;
+  /*bottom: 0;*/
+  /*z-index: 2;*/
+
+}
+
+.content-header-button {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  font-weight: bold;
+}
