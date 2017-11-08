@@ -1,0 +1,36 @@
+.hanoi {
+  display: flex;
+}
+
+.disc {
+  background-color: grey;
+  border-radius: 33%;
+  height: 50px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.tower {
+  -webkit-padding-start: 0px;
+  height: 200px;
+  width: 200px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 7px solid black;
+  margin-right: 10px;
+}
+
+#id0 {
+  width: 70px;
+}
+
+#id1 {
+  width: 100px;
+}
+
+#id2 {
+  width: 130px;
+}
