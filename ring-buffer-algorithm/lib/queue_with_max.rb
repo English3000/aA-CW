@@ -40,11 +40,14 @@ class QueueWithMax
   end
 
   def max
-    if @max.length > 0
-      @max[@max.length - 1]
-    else
+    if @max.length == 0
       @max.push(@store[0])
+      i = 1
+      while i < @store.length
+        @max.push(val) if val > @max[@max.length - 1]
+      end
     end
+    @max[@max.length - 1]
   end
 
   def length
