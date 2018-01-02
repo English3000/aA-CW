@@ -44,7 +44,8 @@ class QueueWithMax
       @max.push(@store[0])
       i = 1
       while i < @store.length
-        @max.push(val) if val > @max[@max.length - 1]
+        @max.push(@store[i]) if @store[i] > @max[@max.length - 1]
+        i += 1
       end
     end
     @max[@max.length - 1]

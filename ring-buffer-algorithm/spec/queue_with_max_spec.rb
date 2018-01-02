@@ -32,7 +32,7 @@ describe QueueWithMax do
 
   it 'returns the correct max while dequeuing' do
     q = QueueWithMax.new
-    arr = [1,3,4,10,9,3,2,17,5]
+    arr = [1,3,4,10,9,3,2,17,5,6,3,4]
     arr.each { |el| q.enqueue(el) }
     (1...arr.length).each do |i|
       max = arr[i..-1].max
