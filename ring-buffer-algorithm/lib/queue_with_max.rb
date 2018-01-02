@@ -8,47 +8,58 @@
 
 require_relative 'ring_buffer'
 
-class QueueWithMax
-  attr_accessor :store
+class QueueWithMax #added LinkedList functionality for O(1) all-around
+  attr_accessor :store, :before, :after
 
-  def initialize
-    @store = RingBuffer.new
-    @max = RingBuffer.new
-  end
+  def initialize(before = nil)
+    @store = RingBuffer.new #main store
+    @before = before
 
-  def enqueue(val)
-    @store.push(val)
-    if @max.length > 0
-      @max.push(val) if val > @max[@max.length - 1]
+    if @before
+      @after = nil
+      @current_node = self
     else
-      @max.push(val)
+      @after = QueueWithMax.new(self) #store of maxes
+      @current_node = @after
+    end
+
+  end
+
+  def enqueue(val) #O(1)
+    @store.push(val) unless @before #not top-level: store of maxes
+
+    if @current_node.store.length == 0
+      @current_node.store.push(val)
+    elsif val > @current_node.store[@current_node.store.length - 1]
+      @current_node.store.push(val)
+    elsif @current_node.after
+      @current_node.after.enqueue(val)
+    else
+      @current_node.after = QueueWithMax.new(@current_node)
+      @current_node.after.store.push(val)
     end
   end
 
-  def dequeue
-    val = @store.shift
+  def dequeue(val = nil) # always O(1)--e.g. [1,5,2,4,3]; [1,2,3,4,5]; [5,4,3,2,1]
+    val = @store.shift unless @before
 
-    new_max = RingBuffer.new
-    i = 0
-    while i < @max.length
-      new_max.push(@max[i]) if @max[i] > val
-      i += 1
+    # if next level is empty, cuts it out of LinkedList
+    @current_node.after = @current_node.after.after if @current_node.after && @current_node.after.store.length == 0
+    # if current level is empty, moves down a level
+    @current_node = @current_node.after if @current_node.store.length == 0
+
+    if @current_node.store[0] == val
+      @current_node.store.shift
+    else
+      @current_node.after.dequeue(val)
     end
 
-    @max = new_max
     val
   end
 
-  def max
-    if @max.length == 0
-      @max.push(@store[0])
-      i = 1
-      while i < @store.length
-        @max.push(@store[i]) if @store[i] > @max[@max.length - 1]
-        i += 1
-      end
-    end
-    @max[@max.length - 1]
+  def max # always O(1)
+    @current_node = @current_node.after if @current_node.store.length == 0
+    @current_node.store[@current_node.store.length - 1]
   end
 
   def length
