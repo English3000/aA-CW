@@ -1,0 +1,61 @@
+<!--
+
+ -->
+<!-- <% if action == :new %>
+  <form action="<%= new_cat_url %>" method="post">
+<% else %>
+  <form action="<%= edit_cat_url(cat[:id]) %>" method="post">
+<% end %> -->
+
+<% if action == :edit %>
+  <% action_url = cat_url(cat)%>
+<% else %>
+  <% action_url = cats_url %>
+<% end %>
+
+<form action="<%= action_url %>" method="post">
+
+  <% if action == :edit %>
+    <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+
+  <label for="name">Name</label>
+  <input id="name" type="text" name="cat[name]" value="<%= cat.name %>">
+  <br>
+  <!-- <label for="age">Age</label>
+  <input id="age" type="text" value="<%= cat.age ? cat.age : "" %>">
+  <br> -->
+  <label for="birth_date">Birth date</label>
+  <input id="birth_date" type="date" name="cat[birth_date]" value="<%= cat.birth_date %>">
+  <br>
+  <label for="color">Shade</label>
+  <select id="color" name="cat[color]">
+    <option disabled <%= cat.color ? "" : "selected"%>>-- select a color --</option>
+    <option value="black" <%= cat.color == "black" ? "selected" : ""%> >Black</option>
+    <option value="white" <%= cat.color == "white" ? "selected" : ""%> >White</option>
+    <option value="brown" <%= cat.color == "brown" ? "selected" : ""%> >Brown</option>
+    <option value="gray" <%= cat.color == "gray" ? "selected" : ""%> >Gray</option>
+    <option value="calico" <%= cat.color == "calico" ? "selected" : ""%> >Calico</option>
+  </select>
+  <br>
+  <label for="sex">Gender</label>
+  <input id="sex" type="radio" name="cat[sex]" value="M" <%= cat.sex == "M" ? "checked" : ""%>> Male <br>
+  <input id="sex" type="radio" name="cat[sex]" value="F" <%= cat.sex == "F" ? "checked" : ""%>> Female <br>
+  <label for="description">Description</label>
+  <textarea id="description" name="cat[description]">
+    <% if action == :edit %>
+      <%= cat.description %>
+    <% end %>
+  </textarea>
+  <br>
+   <input type="submit" value="<%= action == :edit ? 'update cat info' : 'add cat'%>">
+
+  <!-- <form action="index.html" method="post">
+    <input id="birth_date" type="date" value="<%= cat.birth_date %>">
+  </form> -->
+
+
+
+
+
+</form>

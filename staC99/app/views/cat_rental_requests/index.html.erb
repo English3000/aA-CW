@@ -1,0 +1,11 @@
+<!--
+list cats
+link to show page
+ -->
+
+<ul>
+  <% @cat_rental_requests.each do |cat_rental_request| %>
+    <li> <%= cat_rental_request.cat.name %>: <%= cat_rental_request.status %> </li>
+    <li> <%= link_to "show", cat_rental_request_url(cat_rental_request[:id]) %> </li>
+  <% end %>
+</ul>

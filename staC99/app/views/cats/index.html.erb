@@ -1,0 +1,11 @@
+<!--
+list cats
+link to show page
+ -->
+
+<ul>
+  <% @cats.each do |cat| %>
+    <li> <%= cat.name %> </li>
+    <li> <%= link_to "show", cat_url(cat[:id]) %> </li>
+  <% end %>
+</ul>
