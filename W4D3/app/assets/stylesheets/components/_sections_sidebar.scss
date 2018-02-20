@@ -1,0 +1,13 @@
+@media all and (max-width: 1000px) {
+  .right-nav button {
+    display: none;
+  }
+
+  #gear-dropdown-btn {
+    display: inherit;
+  }
+
+  .sections-nav {
+    display: none;
+  }
+}

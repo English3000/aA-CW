@@ -1,0 +1,27 @@
+.sections-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  border-bottom: $light-gray 1px solid;
+  margin-bottom: 18px;
+}
+
+.sections-nav span {
+  margin-right: 18px;
+}
+
+.sections-nav span:hover {
+  background-color: $light-gray;
+  cursor: pointer;
+}
+
+.sections-nav a {
+  font-family: $sans-serif;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.sections-nav a {
+  cursor: pointer;
+}
